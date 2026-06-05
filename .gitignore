@@ -216,3 +216,10 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Voice Models and Build Files
+*.onnx
+*.onnx.json
+*.exe
+LocalVoiceServer/build/
+LocalVoiceServer/dist/

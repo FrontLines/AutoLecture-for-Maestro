@@ -1,0 +1,16 @@
+Welcome to the AutoLecture for Maestro Installer!
+
+AutoLecture is an intelligent, automated text-to-speech companion designed specifically for Maestro learning platforms.
+
+Key Features:
+- Fully Local TTS Engine: Your voice generation happens directly on your machine, ensuring complete privacy and fast generation.
+- Dynamic Bubble Reading: AutoLecture intelligently tracks your progress and automatically reads AI chat bubbles and lesson content.
+- Code Block Reading: Seamlessly extracts and reads code snippets generated within AI Teacher Prompts.
+- Native Chrome Integration: Manage playback, pause, and skip effortlessly from the Chrome Extension popup.
+
+Data Privacy Guarantee:
+AutoLecture operates entirely in real-time. It NEVER saves, downloads, or logs your lesson prompts, chat history, or generated audio files. Once the audio is spoken, it is immediately discarded from system memory.
+
+This setup wizard will guide you through the installation of both the Local Voice Server and the Chrome Extension files.
+
+Click Next to continue.

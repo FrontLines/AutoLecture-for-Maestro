@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AutoLecture Setup Instructions</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+        h1 { color: #4DA8DA; }
+        .box {
+            background-color: #1e1e1e;
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 20px;
+        }
+        ol { margin-left: 20px; }
+        li { margin-bottom: 15px; }
+        code {
+            background-color: #2b2b2b;
+            padding: 4px 8px;
+            border-radius: 6px;
+            color: #ff9d00;
+        }
+        .highlight {
+            font-weight: bold;
+            color: #4DA8DA;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎉 AutoLecture Installed Successfully!</h1>
+    <p>The AutoLecture Voice Server is now running silently in your system tray and is configured to start automatically when you turn on your PC.</p>
+    
+    <div class="box">
+        <h2>Final Step: Load the Chrome Extension</h2>
+        <p>Because this is a custom-built extension, you just need to link it to Chrome once:</p>
+        <ol>
+            <li>Open Google Chrome and type <code>chrome://extensions</code> in the address bar.</li>
+            <li>In the top right corner, turn on the <span class="highlight">Developer mode</span> toggle.</li>
+            <li>In the top left corner, click the <span class="highlight">Load unpacked</span> button.</li>
+            <li>A file browser will open. Paste this exact path into the address bar and press Enter:
+                <br><br><code>%LocalAppData%\AutoLecture\ChromeExtension</code><br><br>
+                <em>(Or manually navigate to your AppData/Local/AutoLecture/ChromeExtension folder)</em>
+            </li>
+            <li>Click <strong>Select Folder</strong>.</li>
+        </ol>
+        <p>That's it! You can now close this window and pin the AutoLecture icon to your Chrome toolbar!</p>
+    </div>
+</body>
+</html>

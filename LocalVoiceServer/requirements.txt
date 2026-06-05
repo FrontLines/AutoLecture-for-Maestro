@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+piper-tts
+pystray
+pillow
+python-multipart

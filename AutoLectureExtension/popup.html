@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      width: 320px;
+      margin: 0;
+      padding: 20px;
+      background: linear-gradient(135deg, #2b2b2b 0%, #1c1c1c 100%);
+      color: #f5f5f5;
+      box-sizing: border-box;
+    }
+    h2 {
+      margin-top: 0;
+      font-size: 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 10px;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .control-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #b3b3b3;
+    }
+    select, input[type="range"] {
+      width: 100%;
+      box-sizing: border-box;
+    }
+    select {
+      background-color: rgba(0, 0, 0, 0.2);
+      color: #f5f5f5;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 8px;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+    }
+    select option {
+      color: black;
+      background-color: white;
+    }
+    select:focus {
+      border-color: #888888;
+    }
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 10px 0;
+      margin-top: 25px;
+      margin-bottom: 15px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .button-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .button-row button {
+      background: none;
+      border: none;
+      box-shadow: none;
+      padding: 0;
+      margin: 0 15px;
+      transition: opacity 0.2s;
+      color: white;
+      cursor: pointer;
+    }
+    .button-row button:hover {
+      background: none;
+      border: none;
+      opacity: 0.7;
+    }
+    .button-row button:active {
+      background: none;
+      opacity: 0.5;
+    }
+    #readAllBtn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      font-weight: 600;
+      border-radius: 12px;
+      padding: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    #readAllBtn:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+    #readFromTopBtn {
+      background: rgba(0, 0, 0, 0.2) !important;
+      border: 1px solid rgba(255, 255, 255, 0.05) !important;
+      border-radius: 12px;
+      padding: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    #readFromTopBtn:hover {
+      background: rgba(0, 0, 0, 0.3) !important;
+    }
+    .status {
+      font-size: 11px;
+      text-align: center;
+      margin-top: 15px;
+      color: #888888;
+    }
+    .bottom-corner {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 6px;
+      margin-top: 15px;
+    }
+    .bottom-corner label {
+      margin-bottom: 0;
+      font-size: 11px;
+      color: #888888;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .bottom-corner label:hover {
+      color: #b3b3b3;
+    }
+    .bottom-corner input[type="checkbox"] {
+      cursor: pointer;
+      accent-color: #27ae60;
+      width: 14px;
+      height: 14px;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+    <h2><img src="icon.png" width="24" height="24" alt="AutoLecture Icon"> AutoLecture for Maestro</h2>
+    
+    <div class="control-group">
+      <label for="voiceSelect">Select Voice Model</label>
+      <select id="voiceSelect">
+        <option value="en_US-ryan-medium">Ryan (Male, Professional, Medium)</option>
+        <option value="en_US-ryan-high">Ryan (Male, Professional, High)</option>
+        <option value="en_US-amy-medium">Amy (Female, Conversational, Medium)</option>
+        <option value="en_US-arctic-medium">Arctic (Male, Neutral, Medium)</option>
+        <option value="en_US-bryce-medium">Bryce (Male, Conversational, Medium)</option>
+        <option value="en_US-joe-medium">Joe (Male, Energetic, Medium)</option>
+        <option value="en_US-john-medium">John (Male, Storyteller, Medium)</option>
+        <option value="en_US-kristin-medium">Kristin (Female, Clear, Medium)</option>
+        <option value="en_US-lessac-high">Lessac (Female, Authoritative, High)</option>
+        <option value="en_US-norman-medium">Norman (Male, Deep, Medium)</option>
+      </select>
+    </div>
+
+    <div class="control-group">
+      <label for="speedSlider">Reading Speed: <span id="speedValue">1.0</span>x</label>
+      <input type="range" id="speedSlider" min="0.5" max="2.0" step="0.1" value="1.0">
+    </div>
+
+    <div class="control-group">
+      <label for="delaySlider">Between Bubble Delay: <span id="delayValue">0.5</span>s</label>
+      <input type="range" id="delaySlider" min="0.5" max="3.0" step="0.5" value="0.5">
+    </div>
+
+    <div class="glass-panel">
+      <div class="button-row" id="mediaControls">
+        <button id="backBtn" title="Previous Section">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/></svg>
+        </button>
+        <button id="playPauseBtn" title="Play/Pause">
+          <svg id="playIcon" width="42" height="42" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          <svg id="pauseIcon" width="42" height="42" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+        </button>
+        <button id="nextBtn" title="Next Section">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/></svg>
+        </button>
+      </div>
+    </div>
+    
+    <div style="margin-top: 15px;">
+      <button id="readAllBtn" style="width: 100%;">Read Last Lesson Section</button>
+    </div>
+    
+    <div style="margin-top: 10px;">
+      <button id="readFromTopBtn" style="width: 100%; background-color: #2d2d2d; color: #b3b3b3;">Read All Lesson Sections from Top</button>
+    </div>
+    
+    <div class="status">Connected to Local Server</div>
+
+    <div class="bottom-corner">
+      <input type="checkbox" id="autoReadToggle" checked>
+      <label for="autoReadToggle">Auto-Read New Lessons</label>
+    </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "AutoLecture for Maestro",
+  "version": "2.0",
+  "description": "Automatically reads teacher prompts on maestro.org aloud using high-quality local Piper voice models.",
+  "permissions": ["storage"],
+  "icons": {
+    "16": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Voice Settings",
+    "default_icon": "icon.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.maestro.org/*",
+        "*://maestro.org/*"
+      ],
+      "js": ["content.js"]
+    }
+  ],
+  "host_permissions": [
+    "http://127.0.0.1:8000/*"
+  ]
+}
