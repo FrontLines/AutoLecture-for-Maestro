@@ -97,6 +97,92 @@ def exit_action(icon, item):
     icon.stop()
     os._exit(0)
 
+import urllib.request
+import urllib.error
+import json
+import tkinter as tk
+from tkinter import messagebox
+import subprocess
+import tempfile
+
+CURRENT_VERSION = "1.4"
+
+def check_for_updates(icon, item):
+    # Run in a separate thread to not freeze the tray icon
+    threading.Thread(target=_run_update_check, daemon=True).start()
+
+def _run_update_check():
+    api_url = "https://api.github.com/repos/FrontLines/AutoLecture-for-Maestro/releases/latest"
+    try:
+        req = urllib.request.Request(api_url, headers={'User-Agent': 'AutoLecture-Updater'})
+        with urllib.request.urlopen(req) as response:
+            data = json.loads(response.read().decode())
+            latest_tag = data.get("tag_name", "")
+            
+            if latest_tag.startswith("v"):
+                latest_version = latest_tag[1:]
+            else:
+                latest_version = latest_tag
+                
+            # Very basic version comparison
+            if latest_version > CURRENT_VERSION:
+                _prompt_update(latest_version)
+            else:
+                # We only show the "Up to date" popup if they manually clicked the menu item
+                root = tk.Tk()
+                root.withdraw()
+                messagebox.showinfo("AutoLecture Updater", f"You are running the latest version ({CURRENT_VERSION})!")
+                root.destroy()
+    except Exception as e:
+        root = tk.Tk()
+        root.withdraw()
+        messagebox.showerror("AutoLecture Updater", f"Failed to check for updates: {e}")
+        root.destroy()
+
+def _prompt_update(latest_version):
+    root = tk.Tk()
+    root.withdraw()
+    result = messagebox.askyesno(
+        "Update Available!",
+        f"AutoLecture v{latest_version} is available!\n\nYou are currently running v{CURRENT_VERSION}.\nWould you like to download and install it now?"
+    )
+    if result:
+        _download_and_install(latest_version)
+    root.destroy()
+
+def _download_and_install(latest_version):
+    # The permalink to the specific asset
+    download_url = f"https://github.com/FrontLines/AutoLecture-for-Maestro/releases/download/v{latest_version}/AutoLecture_for_Maestro_Setup_v{latest_version}.exe"
+    
+    try:
+        root = tk.Tk()
+        root.withdraw()
+        
+        # Download the file to the temp directory
+        temp_dir = tempfile.gettempdir()
+        installer_path = os.path.join(temp_dir, f"AutoLecture_Update_v{latest_version}.exe")
+        
+        # For simplicity, we just download it synchronously. A real app might show a progress bar.
+        req = urllib.request.Request(download_url, headers={'User-Agent': 'AutoLecture-Updater'})
+        with urllib.request.urlopen(req) as response, open(installer_path, 'wb') as out_file:
+            out_file.write(response.read())
+            
+        messagebox.showinfo("Update Downloaded", "The update has been downloaded and will now install silently in the background.\n\nThe server will restart automatically.")
+        root.destroy()
+        
+        # Launch the installer silently
+        subprocess.Popen([installer_path, '/SILENT'])
+        
+        # Kill the current tray app so the files can be overwritten!
+        icon.stop()
+        os._exit(0)
+        
+    except Exception as e:
+        root = tk.Tk()
+        root.withdraw()
+        messagebox.showerror("Update Error", f"Failed to download or run the update:\n{e}")
+        root.destroy()
+
 # Load the bundled icon
 icon_path = os.path.join(BASE_DIR, "icon.ico")
 if os.path.exists(icon_path):
@@ -106,6 +192,7 @@ else:
     image = Image.new('RGB', (64, 64), color = (73, 109, 137))
 
 menu = pystray.Menu(
+    pystray.MenuItem("Check for Updates", check_for_updates),
     pystray.MenuItem("Run at Startup", toggle_startup, checked=lambda item: is_startup_enabled),
     pystray.MenuItem("Show Debugging", toggle_debugging, checked=lambda item: is_debugging),
     pystray.MenuItem("Exit", exit_action)
